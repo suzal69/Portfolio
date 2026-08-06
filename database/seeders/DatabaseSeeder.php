@@ -2,38 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Project;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\PortfolioItem;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::updateOrCreate(
-            ['email' => 'test@example.com'],
-            [
-                'name' => 'Test User',
-                'email_verified_at' => now(),
-                'password' => bcrypt('password'),
-                'remember_token' => \Illuminate\Support\Str::random(10),
-            ]
-        );
-
-        Project::firstOrCreate(
-            ['title' => 'Sample Project'],
-            [
-                'description' => 'This is a seeded sample project.',
-                'status' => 'pending',
-            ]
-        );
+        PortfolioItem::create([
+            'title' => 'Sample Project',
+            'description' => 'A full-stack Laravel application deployed on Render.',
+            'image' => 'images/profile.jpg',
+            'link' => 'https://github.com/suzal69/Portfolio',
+        ]);
     }
 }
