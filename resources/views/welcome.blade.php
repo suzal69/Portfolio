@@ -20,12 +20,7 @@
                 <a href="#projects" class="hover:text-white transition">Portfolio</a>
             </nav>
             <div class="flex items-center gap-4">
-                @auth
-                    <a href="{{ route('portfolio.index') }}" class="px-5 py-2.5 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 text-white rounded-2xl font-medium transition shadow-lg shadow-blue-600/25 text-sm">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition">Log in</a>
-                    <a href="{{ route('register') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition">Register</a>
-                @endauth
+                {{-- Admin dashboard link hidden from public home page --}}
             </div>
         </div>
     </header>
@@ -45,7 +40,7 @@
                 <a href="#projects" class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-3 text-white text-sm font-semibold shadow-glow hover:from-sky-400 hover:to-indigo-400 transition">
                     Explore Portfolio
                 </a>
-                <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition">View case studies, tools, and projects →</a>
+                <a href="#projects" class="text-sm font-semibold text-slate-300 hover:text-white transition">View case studies, tools, and projects →</a>
             </div>
         </div>
 
