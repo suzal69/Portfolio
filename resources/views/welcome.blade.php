@@ -20,7 +20,7 @@
                 <a href="#projects" class="hover:text-white transition">Portfolio</a>
             </nav>
             <div class="flex items-center gap-4">
-                {{-- Admin dashboard link hidden from public home page --}}
+                <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition">Log in</a>
             </div>
         </div>
     </header>
