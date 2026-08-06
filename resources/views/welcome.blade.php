@@ -19,11 +19,12 @@
                 <a href="#about" class="hover:text-white transition">About</a>
                 <a href="#projects" class="hover:text-white transition">Portfolio</a>
             </nav>
-            <div>
+            <div class="flex items-center gap-4">
                 @auth
                     <a href="{{ route('portfolio.index') }}" class="px-5 py-2.5 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 text-white rounded-2xl font-medium transition shadow-lg shadow-blue-600/25 text-sm">Dashboard</a>
                 @else
                     <a href="{{ route('login') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition">Log in</a>
+                    <a href="{{ route('register') }}" class="text-sm font-semibold text-slate-300 hover:text-white transition">Register</a>
                 @endauth
             </div>
         </div>
