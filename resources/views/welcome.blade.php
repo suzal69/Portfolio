@@ -55,7 +55,7 @@
                 <div class="absolute -left-14 top-10 w-36 h-36 bg-violet-500/10 rounded-full blur-3xl"></div>
 
                 <div class="w-48 h-48 mx-auto mb-6 rounded-[2rem] overflow-hidden border border-slate-700/70 bg-slate-900 shadow-inner">
-                    <img src="{{ asset('images/profile.jpg') }}" alt="Sujal Sthapit" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80'">
+                    <img src="{{ asset('images/profile.jpg') }}" alt="Sujal Sthapit" class="w-full h-full object-cover">
                 </div>
 
                 <h3 class="text-2xl font-bold text-white mb-1">Sujal Sthapit</h3>
