@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
         PortfolioItem::create([
             'title' => 'Sample Project',
             'description' => 'A full-stack Laravel application deployed on Render.',
+            'tech_stack' => 'Laravel, Tailwind CSS, MySQL',
             'image_path' => 'images/profile.jpg',
             'github_url' => 'https://github.com/suzal69/Portfolio',
         ]);
