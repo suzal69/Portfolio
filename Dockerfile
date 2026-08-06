@@ -44,4 +44,4 @@ RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf /etc/apache2/sites-available
 EXPOSE 8080
 
 # Run migrations (and seeders if available) on boot, then start Apache
-CMD ["sh", "-c", "php artisan migrate --force && php artisan db:seed --force && apache2-foreground"]
+CMD ["sh", "-c", "touch database/database.sqlite && php artisan migrate --force && php artisan db:seed --force && chown -R www-data:www-data database storage bootstrap/cache && chmod -R 775 database storage bootstrap/cache && apache2-foreground"]
