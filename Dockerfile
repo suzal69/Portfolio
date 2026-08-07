@@ -22,6 +22,9 @@ RUN docker-php-ext-install pdo_mysql pdo_sqlite pdo_pgsql pgsql mbstring exif pc
 
 # Enable Apache mod_rewrite for Laravel routing
 RUN a2enmod rewrite
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    ... (other packages)
 
 # Set working directory
 WORKDIR /var/www/html
@@ -48,8 +51,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-ava
 
 # Configure Apache to listen on Render's dynamic PORT variable
 RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/*.conf
+RUN docker-php-ext-install pdo_mysql pdo_sqlite pdo_pgsql pgsql mbstring exif pcntl bcmath gd
 
 EXPOSE 8080
 
 # Run migrations, set permissions, and start Apache
-CMD ["sh", "-c", "touch database/database.sqlite && php artisan migrate --force && php artisan db:seed --force && chown -R www-data:www-data database storage bootstrap/cache public && chmod -R 775 database storage bootstrap/cache public && apache2-foreground"]
+CMD ["sh", "-c", "php artisan config:clear && php artisan migrate --force && apache2-foreground"]
