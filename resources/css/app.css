@@ -16,8 +16,9 @@
 
 @layer utilities {
   .glass-panel {
-    background: rgba(15, 23, 42, 0.78);
-    backdrop-filter: blur(20px);
+    background: rgba(11, 17, 24, 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
   }
 
   .shadow-glow {
