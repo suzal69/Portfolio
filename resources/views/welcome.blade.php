@@ -139,9 +139,27 @@
                                 @endforeach
                             </div>
 
-                            <p class="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300 transition-colors duration-300 line-clamp-3">
-                                {{ $item->description }}
-                            </p>
+                            <div x-data="{ expanded: false }" class="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                                <p>
+                                    <span x-show="!expanded">
+                                        {{ Str::limit($item->description, 120, '...') }}
+                                    </span>
+
+                                    <span x-show="expanded" x-cloak>
+                                        {{ $item->description }}
+                                    </span>
+                                </p>
+
+                                @if(strlen($item->description) > 120)
+                                    <button 
+                                        @click="expanded = !expanded" 
+                                        class="mt-1 inline-block text-xs font-semibold text-sky-400 hover:text-sky-300 transition-colors focus:outline-none"
+                                    >
+                                        <span x-show="!expanded">Read More ↓</span>
+                                        <span x-show="expanded" x-cloak>Show Less ↑</span>
+                                    </button>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="mt-6 flex flex-wrap items-center gap-3 border-t border-slate-800/60 pt-4 text-sm font-medium text-slate-300">
