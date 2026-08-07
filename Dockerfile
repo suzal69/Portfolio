@@ -23,20 +23,19 @@ RUN docker-php-ext-install pdo_mysql pdo_sqlite pdo_pgsql pgsql mbstring exif pc
 
 # Enable Apache mod_rewrite for Laravel routing
 RUN a2enmod rewrite
-RUN npm install && NODE_OPTIONS="--max-old-space-size=4096" npm run build
-# Set working directory
+
+# Set working directory FIRST
 WORKDIR /var/www/html
 
-# Copy project files
+# Copy all project files (including package.json and composer.json)
 COPY . .
 
 # Install Composer dependencies
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --optimize-autoloader --no-dev --no-interaction
-COPY package*.json ./
-RUN npm ci
-# Install Node dependencies and compile Vite frontend assets
-RUN npm install && npm run build
+
+# Install Node dependencies and compile Vite assets with memory protection
+RUN npm install && NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 # Set directory permissions
 RUN chown -R www-data:www-data /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
