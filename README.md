@@ -30,6 +30,25 @@ A full-stack portfolio web application built with Laravel 12 and PHP 8.2, featur
 
 If you want to clone and run this project locally, follow these steps:
 
+### Render deployment fix
+If you deploy this app on Render, do not rely on the local SQLite file because Render's filesystem is temporary. Follow these steps:
+
+1. Create a PostgreSQL database in Render.
+2. In Render > Environment, set:
+   - `DB_CONNECTION=pgsql`
+   - `DB_HOST=<render-postgres-host>`
+   - `DB_PORT=5432`
+   - `DB_DATABASE=<database-name>`
+   - `DB_USERNAME=<username>`
+   - `DB_PASSWORD=<password>`
+   - or set `DATABASE_URL` with the full PostgreSQL connection string.
+3. Run migrations in the Render deploy command:
+   - `php artisan migrate --force`
+4. If you use image uploads, also run:
+   - `php artisan storage:link`
+
+This ensures projects created through the website are stored in a persistent database and will remain visible after deploys and restarts.
+
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/suzal69/Portfolio.git](https://github.com/suzal69/Portfolio.git)
