@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install system dependencies, PHP extensions, and SQLite
+# Install system dependencies, PHP extensions, SQLite, and PostgreSQL dev libraries
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -10,14 +10,15 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     sqlite3 \
-    libsqlite3-dev
+    libsqlite3-dev \
+    libpq-dev
 
 # Install Node.js & NPM for Vite asset compilation
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
-# Install required PHP extensions
-RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd
+# Install required PHP extensions including MySQL, SQLite, and PostgreSQL support
+RUN docker-php-ext-install pdo_mysql pdo_sqlite pdo_pgsql pgsql mbstring exif pcntl bcmath gd
 
 # Enable Apache mod_rewrite for Laravel routing
 RUN a2enmod rewrite
