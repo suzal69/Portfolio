@@ -4,6 +4,7 @@ use App\Http\Controllers\PortfolioItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 // Public Routes
 Route::get('/', [PortfolioItemController::class, 'publicIndex'])->name('home');
@@ -25,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/run-seeder-9876', function () {
+    Artisan::call('db:seed', ['--force' => true]);
+    return 'Seeder executed successfully: <br><pre>' . Artisan::output() . '</pre>';
 });
 
 require __DIR__.'/auth.php';
