@@ -19,7 +19,7 @@
                     </div>
                 @endif
 
-<form action="{{ route('portfolio.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('portfolio.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     
 
@@ -49,17 +49,15 @@
                         </div>
                     </div>
 
+                    <div>
+                        <x-input-label for="image" :value="__('Project Image')" />
+                        <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500">
+                    </div>
+
                     <div class="flex items-center gap-4">
                         <x-primary-button>{{ __('Save Project') }}</x-primary-button>
                         <a href="{{ route('portfolio.index') }}" class="text-sm text-gray-600 dark:text-gray-400 hover:underline">Cancel</a>
                     </div>
-
-                    <div class="mt-4">
-                        <label class="block font-medium text-sm text-slate-300">Project Image</label>
-                        <input type="file" name="image" class="block mt-1 w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500">
-                    </div>
-
-                    <button type="submit" class="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg">Save Project</button>
                 </form>
 
             </div>

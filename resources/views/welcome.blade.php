@@ -140,15 +140,14 @@
                             </div>
 
                             <div x-data="{ expanded: false }" class="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
-                                <p>
-                                    <span x-show="!expanded">
-                                        {{ Str::limit($item->description, 120, '...') }}
-                                    </span>
-
-                                    <span x-show="expanded" x-cloak>
-                                        {{ $item->description }}
-                                    </span>
+                                <p x-show="!expanded">
+                                    {{ Str::limit($item->description, 120, '...') }}
                                 </p>
+
+                                <p x-show="expanded" x-cloak>
+                                    {{ $item->description }}
+                                </p>
+
 
                                 @if(strlen($item->description) > 120)
                                     <button 
