@@ -56,7 +56,7 @@ class PortfolioItemController extends Controller
 
     public function edit(PortfolioItem $portfolio)
     {
-        return view('admin.portfolio.edit', ['item' => $portfolio]);
+        return view('admin.portfolio.edit', ['portfolioItem' => $portfolio]);
     }
 
     public function update(Request $request, PortfolioItem $portfolio)
