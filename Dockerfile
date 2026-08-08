@@ -52,4 +52,4 @@ RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf /etc/apache2/sites-available
 EXPOSE 8080
 
 # Run migrations against Neon PostgreSQL and start Apache
-CMD ["sh", "-c", "php artisan config:clear && php artisan migrate --force && chown -R www-data:www-data database storage bootstrap/cache public && chmod -R 775 database storage bootstrap/cache public && apache2-foreground"]
+CMD ["sh", "-c", "php artisan config:clear && php artisan storage:link && php artisan migrate --force && chown -R www-data:www-data database storage bootstrap/cache public && chmod -R 775 database storage bootstrap/cache public && apache2-foreground"]

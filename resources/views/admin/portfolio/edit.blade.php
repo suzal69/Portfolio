@@ -50,12 +50,23 @@
                     </div>
 
                     <div>
-                        <x-input-label for="image" :value="__('Project Image (Optional)')" />
+                        <x-input-label for="image_url" :value="__('External Image URL (Optional)')" />
+                        <x-text-input id="image_url" class="block mt-1 w-full" type="url" name="image_url" :value="old('image_url', Str::startsWith($portfolioItem->image_path, 'http') ? $portfolioItem->image_path : '')" placeholder="https://imgur.com/..." />
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Pasting a URL here will replace the current image and take priority over the file upload.</p>
+                    </div>
+
+                    <div class="relative flex items-center">
+                        <div class="flex-grow border-t border-gray-600"></div><span class="flex-shrink mx-4 text-gray-400 text-sm">OR</span><div class="flex-grow border-t border-gray-600"></div>
+                    </div>
+
+                    <div>
+                        <x-input-label for="image" :value="__('Upload New Project Image (Optional)')" />
                         <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500">
                         @if ($portfolioItem->image_path)
                             <div class="mt-4">
                                 <label class="block font-medium text-sm text-slate-300">Current Image:</label>
-                                <img src="{{ asset('storage/' . $portfolioItem->image_path) }}" alt="{{ $portfolioItem->title }}" class="mt-2 h-32 w-auto rounded-md border border-slate-700">
+                                @php $imageUrl = Str::startsWith($portfolioItem->image_path, 'http') ? $portfolioItem->image_path : asset('storage/' . $portfolioItem->image_path); @endphp
+                                <img src="{{ $imageUrl }}" alt="{{ $portfolioItem->title }}" class="mt-2 h-32 w-auto rounded-md border border-slate-700">
                             </div>
                         @endif
                     </div>

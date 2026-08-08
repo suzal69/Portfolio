@@ -41,11 +41,16 @@ class PortfolioItemController extends Controller
             'tech_stack'  => 'required',
             'live_url'    => 'nullable|url',
             'github_url'  => 'nullable|url',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url'   => 'nullable|url',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|exclude_if:image_url,null',
         ]);
 
-        // Handle image upload for creation
-        if ($request->hasFile('image')) {
+        // Prioritize external URL over file upload
+        if ($request->filled('image_url')) {
+            $validated['image_path'] = $request->image_url;
+        }
+        // Fallback to file upload if no URL is provided
+        elseif ($request->hasFile('image')) {
             $validated['image_path'] = $request->file('image')->store('portfolio', 'public');
         }
 
@@ -67,12 +72,20 @@ class PortfolioItemController extends Controller
             'tech_stack'  => 'required',
             'live_url'    => 'nullable|url',
             'github_url'  => 'nullable|url',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url'   => 'nullable|url',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|exclude_if:image_url,null',
         ]);
 
-        // Handle image upload for updates
-        if ($request->hasFile('image')) {
-            // Delete old image if it exists to save space
+        // Handle image update logic
+        if ($request->filled('image_url')) {
+            // If there's a new URL, delete the old stored file if it exists
+            if ($portfolio->image_path) {
+                Storage::disk('public')->delete($portfolio->image_path);
+            }
+            $validated['image_path'] = $request->image_url;
+        }
+        elseif ($request->hasFile('image')) {
+            // If there's a new file, delete the old stored file if it exists
             if ($portfolio->image_path) {
                 Storage::disk('public')->delete($portfolio->image_path);
             }
