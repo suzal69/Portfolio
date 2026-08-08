@@ -124,11 +124,9 @@
                             @if($item->image_path)
                                 <div class="overflow-hidden rounded-[1.3rem] border border-slate-800/50 bg-slate-950 shadow-inner mb-5">
                                     @php
-                                        // Strip out 'storage/', 'public/', or leading slashes to get the raw relative path
-                                        $cleanPath = ltrim(str_replace(['storage/', 'public/'], '',$item->image_path), '/');
-                                        
-                                        // Check if path already starts with 'images/', otherwise prepend 'images/'
-                                        $finalPath = Str::startsWith($cleanPath, 'images/') ? $cleanPath : 'images/' .$cleanPath;
+                                        // Extract only the raw filename (e.g. 'portfolio.jpg') regardless of what path is in the database
+                                        $filename = basename($item->image_path);
+                                        $finalPath = 'images/' . $filename;
                                     @endphp
 
                                     <img 
