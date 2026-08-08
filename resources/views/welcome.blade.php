@@ -123,13 +123,19 @@
 
                             @if($item->image_path)
                                 <div class="overflow-hidden rounded-[1.3rem] border border-slate-800/50 bg-slate-950 shadow-inner mb-5">
-                                    <img src="{{ 
-                                        Str::startsWith($item->image_path, ['http://', 'https://']) 
-                                            ? $item->image_path 
-                                            : (Str::startsWith($item->image_path, 'storage/') 
-                                                ? asset($item->image_path) 
-                                                : asset($item->image_path)) 
-                                    }}" alt="{{ $item->title }}" class="h-48 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                                    @php
+                                        // Strip out 'storage/', 'public/', or leading slashes to get the raw relative path
+                                        $cleanPath = ltrim(str_replace(['storage/', 'public/'], '',$item->image_path), '/');
+                                        
+                                        // Check if path already starts with 'images/', otherwise prepend 'images/'
+                                        $finalPath = Str::startsWith($cleanPath, 'images/') ? $cleanPath : 'images/' .$cleanPath;
+                                    @endphp
+
+                                    <img 
+                                        src="{{ Str::startsWith($item->image_path, ['http://', 'https://']) ? $item->image_path : asset($finalPath) }}" 
+                                        alt="{{ $item->title }}" 
+                                        class="h-48 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    />
                                 </div>
                             @else
                                 <div class="flex h-48 items-center justify-center rounded-[1.3rem] border border-dashed border-slate-800/50 bg-slate-900/50 text-sm text-slate-500 mb-5">
