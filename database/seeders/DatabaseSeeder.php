@@ -20,16 +20,47 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        PortfolioItem::firstOrCreate([
-            'title' => 'Sample Project',
-        ], [
-            'description' => 'A full-stack Laravel application deployed on Render.',
-            'tech_stack' => 'Laravel, Tailwind CSS, MySQL',
-            'image_path' => 'images/profile.jpg',
-            'github_url' => 'https://github.com/suzal69/Portfolio',
-        ]);
+        $portfolioItems = [
+            [
+                'title' => 'Laravel Portfolio & Project Management App',
+                'description' => 'A full-stack Laravel application deployed on Render, featuring portfolio management and project tracking.',
+                'tech_stack' => 'Laravel, Tailwind CSS, MySQL, Alpine.js',
+                'image_path' => 'images/portfolio.jpg',
+                'github_url' => 'https://github.com/suzal69/Portfolio',
+            ],
+            [
+                'title' => 'Helmet Nepal Ecommerce Website',
+                'description' => 'An online store for motorcycle helmets with product management and a checkout flow.',
+                'tech_stack' => 'Laravel, Livewire, MySQL',
+                'image_path' => 'images/ecommerce.jpg',
+            ],
+            [
+                'title' => 'Ekantipur Scraper',
+                'description' => 'A Python script to scrape news articles from Ekantipur online portal.',
+                'tech_stack' => 'Python, Beautiful Soup',
+                'image_path' => 'images/scraper.png',
+            ],
+            [
+                'title' => 'Hostel Management System',
+                'description' => 'A web app to manage hostel rooms, bookings, and residents.',
+                'tech_stack' => 'PHP, MySQL, JavaScript',
+                'image_path' => 'images/hostel.png',
+            ],
+            [
+                'title' => 'Retail-Sales-Analysis',
+                'description' => 'Data analysis of retail sales using Python libraries.',
+                'tech_stack' => 'Python, Pandas, Matplotlib',
+                'image_path' => 'images/retail.png',
+            ],
+        ];
 
-        // Restore the three projects the user expects (idempotent)
+        foreach ($portfolioItems as $item) {
+            PortfolioItem::updateOrCreate(
+                ['title' => $item['title']],
+                $item
+            );
+        }
+
         Project::firstOrCreate([
             'title' => 'Hostel Management System',
         ], [
