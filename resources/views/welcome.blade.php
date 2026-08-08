@@ -121,25 +121,25 @@
 
                             <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight mb-5 group-hover:text-sky-400 transition-colors duration-300">{{ $item->title }}</h4>
 
-                            @if($item->image_path)
-                                <div class="overflow-hidden rounded-[1.3rem] border border-slate-800/50 bg-slate-950 shadow-inner mb-5">
-                                    @php
-                                        // Extract only the raw filename (e.g. 'portfolio.jpg') regardless of what path is in the database
-                                        $filename = basename($item->image_path);
-                                        $finalPath = 'images/' . $filename;
-                                    @endphp
-
-                                    <img 
-                                        src="{{ Str::startsWith($item->image_path, ['http://', 'https://']) ? $item->image_path : asset($finalPath) }}" 
-                                        alt="{{ $item->title }}" 
-                                        class="h-48 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                    />
-                                </div>
-                            @else
-                                <div class="flex h-48 items-center justify-center rounded-[1.3rem] border border-dashed border-slate-800/50 bg-slate-900/50 text-sm text-slate-500 mb-5">
-                                    Preview coming soon
-                                </div>
-                            @endif
+                            <div class="overflow-hidden rounded-[1.3rem] border border-slate-800/50 bg-slate-950 shadow-inner mb-5">
+                                @php
+                                    // Direct title mapping (identical reliability to profile photo asset call)
+                                    $projectImage = match($item->title) {
+                                        'Laravel Portfolio & Project Management App' => 'images/portfolio.jpg',
+                                        'Helmet Nepal Ecommerce Website'            => 'images/ecommerce.jpg',
+                                        'Ekantipur Scraper'                         => 'images/scraper.png',
+                                        'Hostel Management System'                  => 'images/hostel.png',
+                                        'Retail-Sales-Analysis'                     => 'images/retail.png',
+                                        default                                     => 'images/' . basename($item->image_path ?? 'profile.jpg'),
+                                    };
+                                @endphp
+                            
+                                <img 
+                                    src="{{ Str::startsWith($item->image_path ?? '', ['http://', 'https://']) ? $item->image_path : asset($projectImage) }}" 
+                                    alt="{{ $item->title }}" 
+                                    class="h-48 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                />
+                            </div>
 
                             <div class="flex flex-wrap gap-2 mb-5">
                                 @foreach(array_slice(explode(',', $item->tech_stack), 0, 5) as $tech)
